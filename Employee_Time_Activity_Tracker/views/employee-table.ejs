@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<title> <%= title %></title>
+
+<link rel ="stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src  = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+<script src = "https://maxcdn.bootsrapcdn.com/bootstrap/3.4.0/js/bootsrap.min.js"> </script>
+<style>
+td{
+	text-align: center;
+}
+th{
+	text-align: center;
+}
+</style>
+<h1 align = "center"> <%= title %> </h1>
+<div align = "center">
+<table class = "table"> 
+	<thead>
+	<tr>
+		<th> Employee ID </th>
+		<th> First Name </th>
+		<th> Last Name </th>
+		<th> Position </th>
+		<th> Edit </th>
+		<th> Delete </th>
+	</tr>
+</thead>
+<tbody>
+	<% if(empData.length != 0){ 
+	empData.forEach(function(employee){ %>
+	<tr>
+		<td><%= employee.employee_id; %> </td>
+		<td><%= employee.first_name %> </td>
+		<td><%= employee.last_name %> </td>
+		<td><%= employee.position %> </td>
+		<td><a href = "/edit/<%=employee.id%>">Edit</a></td>
+		<td><a href = "/delete/<%=employee.id%>">Delete</a></td>
+	</tr>
+	<%  }) %>
+	<% } else { %>
+		<tr>
+			<td colspan = "7"> No Data Found </td>
+		</tr>
+		<% } %>
+	</tbody>
+</table>
+<button style = "display: inline-block;"id = "goToAdd"> Add Employee </button>
+<button style = "display: inline-block;"id = "goToActivity"> Add Activity </button>
+<button style = "display: inline-block;" id = "goToRemote"> Go To Clock In/Out </button>
+</div>
+
+
+		<script type = "text/javascript">
+		document.getElementById("goToAdd").onclick = function(){
+			console.log("Redirecting to add_employee.ejs..");
+			window.location.href = "/add_employee.ejs";
+		};
+	 	</script>
+
+	<script type = "text/javascript"> 
+		document.getElementById("goToActivity").onclick = function(){
+			console.log("Redirecting to activity.ejs..");
+			window.location.href = "/activity.ejs";
+		}
+	 </script>
+
+	 <script type = "text/javascript">
+	 	document.getElementById("goToRemote").onclick = function(){
+	 		console.log("Redirecting to clock_in_out.ejs");
+	 		window.location.href = "/clock_in_out.ejs";
+	 	}
+	 </script>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<title> <%= title %></title>
+
+<link rel ="stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src  = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+<script src = "https://maxcdn.bootsrapcdn.com/bootstrap/3.4.0/js/bootsrap.min.js"> </script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"> </script>
+
+<style>
+td{
+	text-align: center;
+}
+th{
+	text-align: center;
+}
+</style>
+<h1 align = "center"> <%= title %> </h1>
+<div align = "center">
+<input type = "text" id = "searchID" onkeyup = "searchID()" placeholder = "Search based on ID.." > 
+<label>From: <input class = "form-control" type = "date" id ="fromDate"></label>
+<label>  To: <input class = "form-control" type = "date" id = "toDate"> </label>
+</div>
+
+<div align = "center">
+<table class = "table" id = "actTable"> 
+	<thead>
+	<tr>
+		<th> Employee ID </th>
+		<th> Client </th>
+		<th> Project </th>
+		<th> Activity </th>
+		<th> Length </th>
+		<th> Location </th>
+		<th> Date </th>
+		<th> Description </th>
+	</tr>
+</thead>
+<tbody>
+	<% if(actData.length != 0){ 
+	actData.forEach(function(act){ %>
+	<tr>
+		<td><%= act.employee_id; %> </td>
+		<td><%= act.client %> </td>
+		<td><%= act.project %> </td>
+		<td><%= act.activity %> </td>
+		<td><%= act.length %> </td>
+		<td><%= act.location %> </td>
+		<td><%= act.date %> </td>
+		<td><%= act.desc %> </td>
+		<td><a href = "/edit2/<%=act.id%>">Edit</a></td>
+		<td><a href = "/delete2/<%=act.id%>">Delete</a></td>
+	</tr>
+	<%  }) %>
+	<% } else { %>
+		<tr>
+			<td colspan = "7"> No Data Found </td>
+		</tr>
+		<% } %>
+	</tbody>
+</table>
+<button style = "display: inline-block;"id = "goToAdd"> Add Activity </button>
+</div>
+	<script type = "text/javascript">
+
+function searchID(){
+	var input = document.getElementById("searchID");
+	var filter = input.value.toUpperCase();
+	var table = document.getElementById("actTable");
+	var tr = table.getElementsByTagName("tr");
+	var td;
+	for(var i = 0; i < tr.length; i++){
+		td = tr[i].getElementsByTagName("td")[0];
+		if(td){
+			var textValue = td.textContent || td.innerText;
+			if(textValue.toUpperCase().indexOf(filter) > -1) tr[i].style.display = "";
+			else tr[i].style.display = "none";
+
+		}
+	}
+}
+</script>
+<script> 
+function searchDate(){
+
+		var from = $('#fromDate').val();
+		var to = $('#toDate').val();
+		
+
+		from = from || '1970-01-01';
+		to = to || '2999-12-31';
+
+		var dateFrom = moment(from);
+		var dateTo = moment(to);
+
+		$('#actTable tr').each(function(i, tr){
+			var val = $(tr).find("td:nth-child(7)").text();
+			var dateVal = moment(val, "YYYY-MM-DD");
+			var visible = (dateVal.isBetween(dateFrom, dateTo, null, [])) ? "" : "none";
+			$(tr).css('display', visible);
+		});
+
+}
+	$('#fromDate').on("change", searchDate);
+	$('#toDate').on("change", searchDate);
+
+</script>
+
+
+		<script type = "text/javascript">
+		document.getElementById("goToAdd").onclick = function(){
+			console.log("Redirecting to activity.ejs..");
+			window.location.href = "/activity.ejs";
+		};
+	 	</script>
+
+
+</html>

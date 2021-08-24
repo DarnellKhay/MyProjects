@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang = "en">
+<title> Edit Employee </title>
+<script> "/js/app.js" </script>
+
+<div align="center">
+<form method = "POST" action = "/edit/<%=empData.id %>">
+<h1> Edit Employee </h1>
+	<label> First Name: <input type = "text" id = "update_employee_firstname" name = "update_employee_firstname" value="<%= empData.first_name %>"> </label>
+
+	<br>
+	<br>
+
+	<label> Last Name: <input type = "text" id = "update_employee_lastname" name = "update_employee_lastname"  value="<%= empData.last_name %>" > </label>
+
+	<br>
+	<br>
+
+	<label> Position: <input type = "text" id = "update_employee_position" name = "update_employee_position" value="<%= empData.position %>"> </label>
+
+	<br>
+	<br> 
+
+<button type = "submit"> Update </button>
+</form>
+<button style = "margin-top: 10px;" onclick ="location.href ='/'"> Back </button>
+</div>
+
+
+</html>

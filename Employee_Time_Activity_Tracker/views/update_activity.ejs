@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang = "en">
+<title> Edit Activity </title>
+<script> "/js/app.js" </script>
+
+<div align="center">
+<form method = "POST" action = "/edit2/<%=actData.id %>">
+<h1> Edit Employee </h1>
+	<label> Client: <input type = "text" id = "update_activity_client" name = "update_activity_client" value="<%= actData.client %>"> </label>
+
+	<br>
+	<br>
+
+	<label> Project: <input type = "text" id = "update_activity_project" name = "update_activity_project"  value="<%= actData.project%>" > </label>
+
+	<br>
+	<br>
+
+	<label> Activity: <input type = "text" id = "update_activity_activity" name = "update_activity_activity" value="<%= actData.activity %>"> </label>
+
+	<br>
+	<br> 
+
+	<label> Length: <input type = "text" id = "update_activity_length" name = "update_activity_length" value="<%= actData.length %>"> </label>
+
+	<br>
+	<br> 
+
+	<label> Location: <input type = "text" id = "update_activity_location" name = "update_activity_location" value="<%= actData.location %>"> </label>
+
+	<br>
+	<br> 
+
+	<label> Date: <input type = "date" id = "update_activity_date" name = "update_activity_date" max = "9999-12-31" value="<%= actData.date %>"> </label>
+
+	<br>
+	<br>
+
+	<label> Description: <textarea id = "update_activity_desc" name = "update_activity_desc" value="<%= actData.desc %>"> <%= actData.desc %></textarea></label>
+
+	<br>
+	<br>
+
+<button type = "submit"> Update </button>
+</form>
+<button style = "margin-top: 10px;" onclick ="location.href ='/activity-table.ejs'"> Back </button>
+</div>
+
+
+</html>

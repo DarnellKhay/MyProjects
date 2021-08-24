@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+<title>Add Activity</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+
+
+<body style = "background-image: url(../images/activity_background.jpeg">
+
+<style>
+select{
+	text-align: center;
+	width: 100%;
+}
+</style>
+
+
+
+<div class = "w3-container w3-black" style = "height: 50px;">
+<h1 style = "color: white; font-size: 30px; display: inline;">Today is      </h1>
+<div style = "display: inline; font-size: 30px;"id = "displayCurrentTime">
+</div>
+<button id = "activity_button" name = "activity_button" class = "w3-button w3-theme-d5 w3-round-large" style = "float: right; display: inline-block; margin-top: 3px; color: white;" onclick = "navToActivity();"> Add Activity </button>
+<button id = "remote_button" name = "remote_button" class = "w3-button w3-theme-d5 w3-round-large" style = "float: right; display: inline-block; margin-right: 10px; margin-top: 3px;" onclick = "navToRemote();"> Clock In/Out </button>
+<button id = "office_button" name = "office_button" class = "w3-button w3-theme-d5 w3-round-large" style = "float: right; display: inline-block; margin-right: 10px; margin-top: 3px;" onclick = "navToEmpTable();"> Employee List </button>
+
+
+</div>
+<script src = "../js/form_validation.js"></script>
+<script src = "../app.js"> </script>
+
+<br>
+
+<form method = "POST" action = "/add-activity" name = "form1" class = "w3-container" onsubmit ="return checkWorkDate()">
+<div class = "w3-row-padding"> <!-- Start of row padding -->
+
+	<!-- Start of Column 1-->
+	<div class = "w3-col m3 l2 w3-container" style = "margin-top: 15px">
+		<!-- Employee List/Dropdown-->
+		
+		<div class = "w3-container" style = "display: table-cell; text-align: center; vertical-align: middle; width: 300px; height: 40px; background-color: rgba(192,192,192,0.7);">
+			<label style = "font-weight: bold; color: white;"> Hello! </label>
+		</div>
+		<select class = "w3-select w3-border-0" id = "employees" name = "employees" style = "display:table-cell; text-align-last: center; background-color: rgba(255,140,0,0.85); color: white; height: 55px; font-size: 20px;">
+			<% if(empData.length != 0){ 
+			empData.forEach(function(employee){ %>
+			<option value = "<%= employee.employee_id %>" ><%= employee.first_name %> </option>
+		<%  }) %>		
+		<% } else { %>
+		<option > No Employees </option>
+		<% } %>
+	</select>
+		
+	</div>
+
+
+ 	<div class = "w3-col m4 l4 w3-container" style = "margin-top: 15px;" > <!-- Start of Column 2-->
+
+
+ <!-- Client Section -->
+<div class = "col-container" style = "display: table; width: 100%;">
+
+
+ 	 <div class = "w3-container w3-theme-l2" style = "display: table-cell; text-align: center; vertical-align: middle; width: 120px;">
+ 	<label id = "label1" name = "label1" for = "client" style = "font-weight: bold; color: white;"> Client </label>
+</div>
+		<select class = "w3-select w3-border-0" id="client" name="client" style = "display: table-cell; text-align-last: center;">
+			<option value = "Client1"> Client1</option>
+			<option value = "Client2"> Client2</option>
+			<option value = "Client3"> Client3</option>
+		</select>
+
+</div>
+
+
+<br>
+
+ <!-- Project Section -->
+ <div class = "col-container" style = "display: table; width: 100%;">
+
+ 	<div class = "w3-container w3-theme-l2" style = "display: table-cell; text-align: center; vertical-align: middle; width: 120px;">
+ 	<label for = "project" style = "font-weight: bold; color: white;"> Project</label>
+</div>
+ 	
+		<select class = "w3-select w3-border-0" id="project" name="project" style = "display: table-cell; text-align-last: center;">
+			<option value = "Project1"> Project1</option>
+			<option value = "Project2"> Project2 </option>
+			<option value = "Project3"> Project3 </option>
+			<option value = "Project4"> Project4 </option>
+			<option value = "Project5"> Project5 </option>
+		</select>
+
+
+</div>
+
+<br>
+
+ <!-- Activity Section -->
+  <div class = "col-container" style = "display: table; width: 100%;">
+
+ 	<div class = "w3-container w3-theme-l2" style = "display: table-cell; vertical-align: middle; text-align: center; width: 120px;">
+ 	<label for = "activity" style = "font-weight: bold; color: white;">  Activity </label>
+</div>
+ 	
+		<select class = "w3-select w3-border-0" id="activity" name="activity" style = "display: table-cell; text-align-last: center;">
+			<option value = "Research"> Research </option>
+			<option value = "Meeting"> Meeting</option>
+			<option value = "Debugging"> Debugging</option>
+			<option value = "Coding"> Coding</option>
+			<option value = "Presenting"> Presenting </option>
+</select>
+
+
+</div>
+
+
+<br>
+ <!-- How long Section -->
+  <div class = "col-container" style = "display: table; width: 100%;">
+
+ 	<div class = "w3-container w3-theme-l2" style = "display: table-cell; vertical-align: middle; text-align: center; width: 120px;">
+ 	<label for = "length" style = "font-weight: bold; color: white;">  How long </label>
+</div>
+ 	
+		<select class = "w3-select w3-border-0" id="length" name="length" style = "display: table-cell; text-align-last: center;">
+			<option value = "0.5 hours"> 0.5 hours </option>
+			<option value = "1 hour"> 1 hour</option>
+			<option value = "1.5 hours"> 1.5 hours</option>
+			<option value = "2 hours"> 2 hours</option>
+			<option value = "2.5 hours"> 2.5 hours</option>
+			<option value = "3 hours"> 3 hours</option>
+			<option value = "3.5 hours"> 3.5 hours</option>
+			<option value = "4 hours"> 4 hours</option>
+			<option value = "4.5 hours"> 4.5 hours</option>
+			<option value = "5 hours"> 5 hours</option>
+			<option value = "5.5 hours"> 5.5 hours</option>
+			<option value = "6 hours"> 6 hours</option>
+			<option value = "6.5 hours"> 6.5 hours</option>
+			<option value = "7 hours"> 7 hours</option>
+			<option value = "7.5 hours"> 7.5 hours</option>
+			<option value = "8 hours"> 8 hours</option>
+			<option value = "8.5 hours"> 8.5 hours</option>
+			<option value = "9 hours"> 9 hours</option>
+			<option value = "9.5 hours"> 9.5 hours</option>
+			<option value = "10 hours"> 10 hours</option>
+</select>
+
+
+</div>
+
+<br>
+ <!-- Location Section -->
+  <div class = "col-container" style = "display: table; width: 100%;">
+
+ 	<div class = "w3-container w3-theme-l2" style = "display: table-cell; vertical-align: middle; text-align: center; width: 120px;">
+ 	<label for = "location" style = "font-weight: bold; color: white;">  Location </label>
+</div>
+ 	
+		<select class = "w3-select w3-border-0" id="location" name="location" style = "display: table-cell; text-align-last: center;">
+			<option value = "Office"> Office </option>
+			<option value = "Remote"> Remote </option>
+			<option value = "HQ"> HQ</option>
+			
+</select>
+
+
+</div>
+<!-- Submit Button  -->
+<button  id = "submit" style = "margin-top: 20px; text-align: center; display: block; font-weight: bold; width: 230%; height: 75px; font-size: 23px; background-color: rgba(0,0,0,0.3); color: white;" class = "w3-button  w3-round-large fa fa-plus-circle" type = "submit" value = "Submit"> Add Activity </button>
+
+
+</div> <!-- End of 2nd column --> 
+
+
+<!-- Start of Column 3 --> 
+<div class = "w3-col m5 l5 w3-container" style = "margin-top: 15px;">
+
+	<!-- Work Date Section -->
+
+	<div class = "col-container" style = "display: table; width: 100%; margin-bottom: 4px;">
+
+		<div class = "w3-container w3-theme-l2" style = "display: table-cell; text-align: center; vertical-align: middle; width: 130px;">
+			<label id = "label_work_date" style = "color: white;" for = "workdate"> <span style = "color:red;">*</span> Work Date </label>
+		</div>
+		
+		<input class = "w3-input w3-border-0" name = "workdate" id = "workdate" type="date" max = "9999-12-31" style = "display: table-cell; text-align-last: center;" oninput = "inputCheckWorkDate()">
+		
+</div>
+	
+
+
+
+<!-- Activity Description Section -->
+
+
+ 	<div class = "w3-container w3-theme-l2 " style = "margin-top: 20px">
+ 	<label style = "color: white;"> Activity Description </label>
+ </div>
+ 		<textarea id = "description" name = "description"rows ="8" class = "w3-input w3-border" style = "resize: none;" placeholder="Activity Description"></textarea>
+ 
+
+</div> <!-- end of column 3 -->
+
+</div> <!-- End of Row Padding -->
+
+<br> 
+
+
+
+
+
+	<label style = "color: red; text-align: center; display: block;" id = "work_date_message" ></label>
+
+</form> <!-- End of Form -->
+
+
+	<a href = "./activity-table.ejs" style = "display: block;color:white; text-align: center; border: solid 1px #80bcff; padding:15px; text-decoration: none; font-size: 20px; font-weight: bold;"> Recent Activities Entered</a>
+
+
+	<script>
+		window.onload = function(){
+			renderClock();
+		}
+	</script>
+	 <script type = "text/javascript">
+	 	 let renderClock = function(){
+	 		document.getElementById("displayCurrentTime").innerHTML = moment().format("MM/DD/YYYY HH:mm:ss");
+	 	};
+
+	 	setInterval(renderClock, 1000)
+	 </script>
+</body>
+
+
+</html>

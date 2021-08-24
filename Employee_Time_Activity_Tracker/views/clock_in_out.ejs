@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+<title>Time Tracker</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-cyan.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+<script src = "../js/form_validation.js"></script>
+
+<body style = "background-image: url(../images/time_tracker_background.jpeg">
+
+<style>
+select{
+	text-align: center;
+	width: 100%;
+}
+td{
+	text-align: center;
+	height: 50px;
+}
+th{
+	text-align: center;
+}
+
+tr:nth-child(even){
+	background-color: lightgray;
+}
+
+.divScroll{
+	overflow-y:scroll;
+}
+</style>
+
+<div class = "w3-container w3-black" style = "height: 50px;">
+<h1 style = "color: white; font-size: 30px; display: inline;">Today is      </h1>
+<div style = "display: inline; font-size: 30px;"id = "displayCurrentTime">
+</div>
+
+<button id = "activity_button" name = "activity_button" class = "w3-button w3-dark-gray w3-round-large" style = "float: right; display: inline-block; margin-top: 3px; color: white;" onclick = "navToActivity();"> Add Activity </button>
+<button id = "remote_button" name = "remote_button" class = "w3-button w3-dark-gray w3-round-large" style = "float: right; display: inline-block; margin-right: 10px; margin-top: 3px;" onclick = "navToRemote();"> Clock In/Out </button>
+<button id = "office_button" name = "office_button" class = "w3-button w3-dark-gray w3-round-large" style = "float: right; display: inline-block; margin-right: 10px; margin-top: 3px;" onclick = "navToEmpTable();"> Employee List </button>
+
+
+
+</div>
+
+<script src = "../js/form_validation.js"></script>
+<script src = "../app.js"> </script>
+
+<br>
+
+<form method = "POST" action = "/enter-time" name = "form3" class = "w3-container">
+<div class = "w3-row-padding"> <!-- Start of row padding -->
+	<label id = "todays_date" name = "todays_date"> </label>
+	<!-- Start of Column 1-->
+	<div class = "w3-col m3 l2 w3-container" style = "margin-top: 15px">
+		<!-- Employee List/Dropdown-->
+		
+		<div class = "w3-container" style = "display: table-cell; text-align: center; vertical-align: middle; width: 300px; height: 40px; background-color: rgba(192,192,192,0.7)">
+			<label style = "font-weight: bold; color: white;"> Hello! </label>
+		</div>
+
+		<select class = "w3-select w3-border-0"  id="employees" name = "employees" style = "display:table-cell; text-align-last: center; background-color: rgba(255,140,0,0.8); color: white; height: 55px; font-size: 20px;" onselect = "getName(); getHours();"  onchange = "getName(); getHours();">
+			<% if(empData.length != 0){ 
+			empData.forEach(function(employee){ %>
+	
+
+			<option id = "<%=employee.worked_hours%>"value = "<%=employee._id%>"><%= employee.first_name %> </option>
+
+			
+
+
+		<%  }) %>		
+		<% } else { %>
+		<option > No Employees </option>
+		<% } %>
+	</select>
+		
+	</div> <!-- end of column 1 -->
+
+
+<div class = "w3-col m9 l0 w3-container" style = "margin-left: 50px; margin-top: 15px;" > <!-- Start of Column 2-->
+<div class = 'w3-container w3-theme'>
+<h1 style = "color: white;"> 
+
+
+ <label id = "display_name" name = "display_name" value = "">  </label> <label id = "hours"></label> <label id = "temp_label"> Select an employee from the dropdown </label>
+	</select>
+
+</h1>
+</div>
+
+<table id = "employeeTable" class = "divScroll" style =  "border-collapse: collapse; width: 100%;">
+
+<thead class = "w3-theme-d4"> 
+
+	<tr>
+		<th> Staff Name</th>
+		<th> Start </th>
+		<th> End </th>
+		<th> Worked Hours</th>
+	</tr>
+
+</thead>
+
+<tbody class = "w3-light-gray">
+	<% empData.forEach(function(employee){ %>
+
+ 
+	<% tableData.forEach(function(entry){ %>
+
+	<tr>
+		<% if (employee._id == entry.employee_id){ %>
+		<% if(entry.start_time != ""){ %>  
+		<td id = "employee_id" style = "display:none;"><%=employee._id%></td>
+		<td id = "employee_name" ><%= employee.first_name + ' ' + employee.last_name%> </td>
+		
+		<td><%= entry.start_time %> </td>
+		<% if (entry.end_time == "") { %>
+		<td><%= "Still working hard :-)" %> </td>
+	<% }%>
+	<%if (entry.end_time != ""){ %>
+	<td><%= entry.end_time %> </td>
+	<% } %>
+		<td id = "employee_hours"><%= entry.worked_hours %></td>
+	<%	} %>
+	<% } %>
+	</tr>
+
+	<%  }) %>
+	<% }) %>
+	</tbody>
+</table>
+
+
+</div>
+
+<button class = "w3-button w3-round-large fa fa-arrow-right" value = "start" style = "color: white; background-color: rgba(0,0,237,0.65); text-align: center; display: inline-block; font-weight: bold; font-size: 30px; height: 75px; margin-top: 10px; " id = "startTimeButton" name = "startTimeButton"> Start Remote Work </button>
+
+<button class = "w3-button w3-round-large fa fa-refresh" value = "refresh" style = "color: white; background-color: rgba(72,209,204,0.7); text-align: center; display: inline-block; font-weight: bold; font-size: 20px; height: 50px; margin-top: 10px; margin-left: 275px;" id = "refreshButton" name = "refreshButton"> Show Remote Hours</button>
+
+<button id = "end_time" class = "w3-button w3-round-large fa fa-arrow-circle-right"  value ="end" style = "color: white; background-color: rgba(0,0,237,1); text-align: center; display: inline-block; font-weight: bold; font-size: 30px; height: 75px; float:right; margin-top: 10px; " id ="endTimeButton" name = "endTimeButton"> End Remote Work </button>
+
+	<script>
+		window.onload = function(){
+			renderClock();
+		}
+	</script>
+	 <script type = "text/javascript">
+	 	 let renderClock = function(){
+	 		document.getElementById("displayCurrentTime").innerHTML = moment().format("MM/DD/YYYY HH:mm:ss");
+	 	};
+
+	 	setInterval(renderClock, 1000)
+	 </script>
+	 
+	 <script type = "text/javascript">
+	 	function getName(){
+
+	 		var option = document.getElementById("employees");
+	 		var name = option.options[option.selectedIndex].text;
+	 		document.getElementById("display_name").innerHTML = name + " has worked remotely for ";
+	 		document.getElementById("temp_label").innerHTML = "";
+	 	}
+</script>
+<script type = "text/javascript">
+	 	function getHours(){
+
+	 		
+	 		var option = document.getElementById("employees");
+	 		var hours = option.options[option.selectedIndex].id;;
+
+	 		document.getElementById("hours").innerHTML = hours + " hours today."; 
+
+
+
+	 	}
+	 </script>
+
+</form> <!-- End of Form -->
+
+</body>
+
+
+</html>
