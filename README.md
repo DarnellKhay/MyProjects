@@ -5,7 +5,7 @@ To access any of my projects, download this repository (MyProjects) as a zip and
 inside the zip. 
 
 
-#Employee_Time_Activity_Tracker:
+# Employee_Time_Activity_Tracker:
 Requires an installation of node modules. 
 - run "npm i" in terminal or command prompt 
 - then run "ng serve" 
